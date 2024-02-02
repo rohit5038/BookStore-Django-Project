@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+
+{% load static %}
+
+<style>
+    .container {
+        background-color: black;
+    }
+
+    h5 {
+        color: white;
+    }
+
+    .none {
+        text-align: center;
+        color: white;
+    }
+
+    .body {
+        background-color: #111;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placeorder</title>
+</head>
+
+<body class="body text-white">
+    <!--Main start-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9"><!--Customer Details start-->
+                <h5 class="bg-secondary text-white p-3">Customer Details</h5>
+                {% for x in book %}
+                {% if forloop.counter == 1 %}
+                <p><strong>Name:</strong> {{x.uid.username}}</p>
+                <p><strong>Mobile:</strong> 7418520963</p>
+                <p><strong>Email:</strong>{{x.uid.email}}</p>
+                {% endif %}
+                {% endfor %}
+
+                <br>
+                <div class="row">
+                    <h5 class="bg-secondary text-white p-3">Book Details</h5>
+                    {% for x in book %}
+                    <div class="col-md-4">
+                        <img src="{{x.pid.pimage.url}}" width="50%">
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <p><strong>Book Name:</strong>&nbsp;&nbsp;&nbsp;{{x.pid.name}}</p>
+                        <p><strong>Price:</strong>&nbsp;&nbsp;&nbsp;Rs.{{x.pid.price}}</p>
+                        <p><strong>Category:</strong>&nbsp;&nbsp;&nbsp;
+                        {% if x.pid.cat == 1 %}
+                        <p class="card-text">Action</p>
+                        {% elif x.pid.cat == 2 %}
+                        <p class="card-text">Anime</p>
+                        {% else %}
+                        <p class="card-text">Science Fiction</p>
+                        {% endif %}
+                        <p><strong>Book Description:</strong>&nbsp;&nbsp;&nbsp;{{x.pid.bdetails}}</p>
+                        <a href="/remove/{{x.id}}"><button class="btn btn-danger">Remove</button></a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div><!--Customer Details end-->
+
+            <div class="col-md-3"><!--Total amount start-->
+                <h5 class="bg-secondary text-white p-3">Total Amount</h5>
+                <p><strong>Total({{totalitem}} items): </strong> &nbsp;&nbsp;&nbsp;Rs. {{totalprice}}/-</p>
+                <hr>
+                <p><strong>Total Amount: </strong> &nbsp;&nbsp;&nbsp;Rs. {{totalprice}}/-</p>
+                <a onclick="return confirm('Are you sure to Make This Payment?')" href="/makepayment"><button class="btn btn-danger">Make Payment</button></a>
+            </div>
+        </div>
+    </div>
+
+    <!--Main end-->
+
+    <!--<script src="asset/js/bootstrap.min.js"></script>-->
+</body>
+
+</html>
+
+{% endblock 'main' %}

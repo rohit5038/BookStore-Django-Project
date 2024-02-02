@@ -1,0 +1,81 @@
+{% extends 'base.html'%}
+
+{% block 'main' %}
+
+{% load static %}
+
+<style>
+    .container {
+        background-color: black;
+    }
+
+    h5 {
+        color: white;
+    }
+
+    .none {
+        text-align: center;
+        color: white;
+    }
+
+    .body {
+        background-color: #111;
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book_Detail</title>
+</head>
+
+<body class="body">
+    <!--Main Start-->
+    <div class="container text-white">
+        <div class="row">
+            {% for x in book %}
+            <div class="col-md-6 mt-5 mb-4">
+                <img src="{{x.pimage.url}}" width="50%">
+            </div>
+            <div class="col-md-6 mb-4 mt-5">
+                <p><strong>Book Name:</strong>&nbsp;{{x.name}}</p>
+                <p><strong>Price:</strong>&nbsp;Rs.{{x.price}}</p>
+                {% if x.cat == 1 %}
+                <p class="card-text">Action</p>
+                {% elif x.cat == 2 %}
+                <p class="card-text">Anime</p>
+                {% else %}
+                <p class="card-text">Science-Fiction</p>
+                {% endif %}
+                <p><strong>Book Description:</strong>&nbsp;{{x.bdetails}}</p>
+
+
+                <a href="/addtocart/{{x.id}}"><button class="btn btn-primary">Add To Cart</button></a>
+                <a href="/viewcart"><button class="btn btn-primary">View Cart</button></a>
+                <a href="/"><button class="btn btn-primary">Shop More</button></a>
+                <br>
+                {% if success %}
+                <div class="alert alert-success">
+                    {{success}}
+                </div>
+                {% endif %}
+
+                {% if msg %}
+                <div class="alert alert-danger">
+                    {{msg}}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <hr>
+        </div>
+    </div>
+</body>
+
+</html>
+
+{% endblock 'main' %}

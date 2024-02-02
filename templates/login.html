@@ -1,0 +1,61 @@
+{% extends 'sign_in.html'%}
+
+{% block 'main' %}
+
+{% load static %}
+
+<style>
+    .text-white{
+        text-align: center;
+    }
+
+    .body{
+        background-color: #111;
+    }
+
+    a[href="/register"]:contains("Not a User?") {
+        color: white;
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body class="body">
+    <div class="row">
+        <div class="col-md-4 mt-4 p-4 mx-auto">
+            <h2 class="text-white">Login</h2>
+
+            {% if errmsg %}
+            <div class="alert alert-danger">
+                {{errmsg}}
+            </div>
+            {% endif %}
+
+            <form method="post" action="/login">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="Input1" class="form-label text-white">Username:</label>
+                        <input type="email" class="form-control" id="Input1" name="uname" placeholder="Enter Username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Input2" class="form-label text-white">Password:</label>
+                        <input type="password" class="form-control" id="Input2" name="upass" placeholder="Enter Password">
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary text-white" value="Login"> <a class="text-white" style="text-decoration: none;">Not a User?</a> <a href="/register" style="text-decoration: none;">Register</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<script src="asset/js/bootstrap.min.js"></script>
+{% endblock 'main' %}

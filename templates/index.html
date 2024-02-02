@@ -1,0 +1,600 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+{% load static %}
+
+<style>
+    .container {
+        background-color: black;
+    }
+
+    h5 {
+        color: white;
+    }
+
+    .none {
+        text-align: center;
+        color: white;
+    }
+
+    .body {
+        background-color: #111;
+    }
+
+    .card-body {
+        background-color: #999;
+    }
+
+    #billboard .main-slider {
+        padding: 80px 0;
+    }
+
+    .main-slider .slider-item {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .main-slider .banner-content {
+        width: 35%;
+        margin-top: 60px;
+        margin-right: 175px;
+    }
+
+    .banner-content h2.banner-title {
+        font-size: 4.5em;
+        font-weight: 500;
+        color: #222;
+    }
+
+    .banner-content p {
+        margin: 0 0 30px 0;
+    }
+
+    #billboard .slick-dots {
+        left: 200px;
+        bottom: 110px;
+        width: 10%;
+        text-align: inherit;
+    }
+
+    #billboard button.slick-arrow {
+        background: transparent;
+        border: 1px solid #E5E3DA;
+        padding: initial;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        z-index: 5;
+        cursor: pointer;
+    }
+
+    #billboard button.slick-arrow:hover {
+        border: 1px solid #74642F;
+        background-color: #E5E3DA;
+    }
+
+    #billboard button.prev.slick-arrow {
+        left: 110px;
+    }
+
+    #billboard button.next.slick-arrow {
+        right: 110px;
+    }
+
+    #billboard .slick-arrow i.icon {
+        color: #8C8C8C;
+    }
+
+    @media screen and (max-width: 1366px) {
+        #billboard button.prev.slick-arrow {
+            left: 0;
+        }
+
+        #billboard button.next.slick-arrow {
+            right: 0;
+        }
+    }
+
+    @media screen and (max-width: 999px) {
+        .banner-content h2.banner-title {
+            font-size: 3.5em;
+        }
+
+        #billboard .main-slider {
+            margin: 70px 0;
+            padding: 0;
+        }
+
+        .main-slider .slider-item {
+            flex-wrap: wrap;
+            text-align: center;
+            flex-direction: column-reverse;
+        }
+
+        .main-slider .banner-content {
+            width: 100%;
+            margin-top: 60px;
+            margin-right: 0;
+            margin-bottom: 80px;
+        }
+
+        #billboard .slick-dots {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    .listing-section,
+    .cart-section {
+        width: 100%;
+        float: left;
+        padding: 1%;
+        border-bottom: 0.01em solid #dddbdb;
+    }
+
+    .product {
+        float: left;
+        width: 23%;
+        border-radius: 2%;
+        margin: 1%;
+    }
+
+    .product:hover {
+        box-shadow: 1.5px 1.5px 2.5px 3px rgba(0, 0, 0, 0.4);
+        -webkit-box-shadow: 1.5px 1.5px 2.5px 3px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 1.5px 1.5px 2.5px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-box {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 2% 2% 0 0;
+    }
+
+    .images {
+        height: 15em;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        border-radius: 2% 2% 0 0;
+        transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        -webkit-transition: all 1s ease;
+        -o-transition: all 1s ease;
+    }
+
+    .images:hover {
+        transform: scale(1.2);
+        overflow: hidden;
+        border-radius: 2%;
+    }
+
+    /* IMAGES */
+    #image-1 {
+        background-image: url("{% static 'asset/images/books/action-4.jpg' %}");
+    }
+
+    #image-2 {
+        background-image: url("{% static 'asset/images/books/fiction-4.jpg' %}")
+    }
+
+    #image-3 {
+        background-image: url("{% static 'asset/images/books/anime-5.jpg' %}")
+    }
+
+    #image-4 {
+        background-image: url("{% static 'asset/images/books/anime-4.jpg' %}")
+    }
+
+    #image-5 {
+        background-image: url("{% static 'asset/images/books/action-5.jpg' %}")
+    }
+
+    #image-6 {
+        background-image: url("{% static 'asset/images/books/anime-6.jpg' %}")
+    }
+
+    #image-7 {
+        background-image: url("{% static 'asset/images/books/fiction-5.jpg' %}")
+    }
+
+    #image-8 {
+        background-image: url("{% static 'asset/images/books/fiction-6.jpg' %}")
+    }
+
+    .text-box {
+        width: 100%;
+        float: left;
+        border: 0.01em solid #dddbdb;
+        border-radius: 0 0 2% 2%;
+        padding: 1em;
+    }
+
+    h3 {
+        float: left;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 1em;
+        text-transform: uppercase;
+        margin: 0.2em auto;
+    }
+
+    .item,
+    .price {
+        clear: left;
+        width: 100%;
+        text-align: center;
+    }
+
+
+    .label,
+    button,
+    input {
+        float: left;
+        clear: left;
+        width: 100%;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        font-size: 1em;
+        text-align: center;
+        margin: 0.2em auto;
+    }
+
+    input:focus {
+        outline-color: #fdf;
+    }
+
+    label {
+        width: 60%;
+    }
+
+    .text-box input {
+        width: 15%;
+        clear: none;
+    }
+
+    .text-box button {
+        margin-top: 1em;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/icomoon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'asset/css/vendor.css' %}">
+</head>
+
+<body class="body text-white">
+
+
+    <div class="container">
+        {% if user.is_authenticated %}
+        <div class="main-slider pattern-overlay">
+            <div class="slider-item">
+                <div class="banner-content">
+                    <h2 class="banner-title text-white">Life of the Wild</h2>
+                    <p>Welcome to our online bookstore, where you can browse and purchase books from the comfort of your
+                        own home. Our user-friendly website features a wide selection of books, including releases,
+                        bestsellers, and classics. You can use our search function to find by title, author, keyword, or
+                        browse our catalog by category.</p>
+                    <div class="btn-wrap">
+                        <a href="/books" class="btn btn-outline-primary btn-accent-arrow text-white">Show More<i
+                                class="icon icon-ns-arrow-right"></i></a>
+                    </div>
+                </div><!--banner-content-->
+                <img src="{% static 'asset/images/banner/main-banner1.jpg' %}" alt="banner" class="banner-image mt-5">
+            </div><!--slider-->
+            <hr>
+            <h2 class="none">Best Sellers</h2>
+            <hr>
+
+            <div class="listing-section">
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-3"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Anime</h4>
+                        <h5 class="price">Rs.1999</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-3-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-1"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Action</h4>
+                        <h5 class="price">Rs.500</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-2"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Fiction</h4>
+                        <h5 class="price">Rs.999</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-2-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-4"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Anime</h4>
+                        <h5 class="price">Rs.799</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-4-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-5"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Action</h4>
+                        <h5 class="price">Rs.1999</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-3-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-6"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Anime</h4>
+                        <h5 class="price">Rs.500</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-7"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Fiction</h4>
+                        <h5 class="price">Rs.999</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-2-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-8"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Fiction</h4>
+                        <h5 class="price">Rs.799</h5>
+                        <a href="/books"><button class="btn btn-outline-primary" type="button" name="item-4-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col p-4 mx-auto"><!--product start-->
+                    <hr class="text-white">
+                    <h2 class="none">Books</h2>
+                    <hr class="text-white">
+                    <div class="row ">
+                        {% for x in book %}
+                        <div class="col-md-3 mt-4"><!--product1 start-->
+                            <div class="card" style="width: 100%;">
+                                <a href="/books">
+                                    <img src="{{x.pimage.url}}" width="100%" height="350px" class="card-img-top"
+                                        alt="...">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{x.name}}</h5>
+                                    <p class="card-text">Rs.{{x.price}}</p>
+                                    {% if x.cat == 1 %}
+                                    <p class="card-text">Action</p>
+                                    {% elif x.cat == 2 %}
+                                    <p class="card-text">Anime</p>
+                                    {% else %}
+                                    <p class="card-text">Science-Fiction</p>
+                                    {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div><!--  product1 end -->
+                        {% endfor %}
+                    </div>
+                </div> <!--  product end -->
+                <hr class="text-white">
+            </div>
+        </div><!--product and filter end-->
+        {% else %}
+        <div class="main-slider pattern-overlay">
+            <div class="slider-item">
+                <div class="banner-content">
+                    <h2 class="banner-title text-white">Life of the Wild</h2>
+                    <p>Welcome to our online bookstore, where you can browse and purchase books from the comfort of your
+                        own home. Our user-friendly website features a wide selection of books, including releases,
+                        bestsellers, and classics. You can use our search function to find by title, author, keyword, or
+                        browse our catalog by category.</p>
+                    <div class="btn-wrap">
+                        <a href="/login" class="btn btn-outline-primary btn-accent-arrow text-white">Show More<i
+                                class="icon icon-ns-arrow-right"></i></a>
+                    </div>
+                </div><!--banner-content-->
+                <img src="{% static 'asset/images/banner/main-banner1.jpg' %}" alt="banner" class="banner-image mt-5">
+            </div><!--slider-->
+            <hr>
+            <h2 class="none">Best Sellers</h2>
+            <hr>
+
+            <div class="listing-section">
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-3"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Anime</h4>
+                        <h5 class="price">Rs.1999</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-3-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-1"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Action</h4>
+                        <h5 class="price">Rs.500</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-2"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Fiction</h4>
+                        <h5 class="price">Rs.999</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-2-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-4"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Anime</h4>
+                        <h5 class="price">Rs.799</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-4-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-5"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Action</h4>
+                        <h5 class="price">Rs.1999</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-3-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-6"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Anime</h4>
+                        <h5 class="price">Rs.500</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-7"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Fiction</h4>
+                        <h5 class="price">Rs.999</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-1-button"
+                                id="item-2-button">Shop Now</button></a>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <div class="image-box">
+                        <div class="images" id="image-8"></div>
+                    </div>
+                    <div class="text-box">
+                        <h4 class="item">Fiction</h4>
+                        <h5 class="price">Rs.799</h5>
+                        <a href="/login"><button class="btn btn-outline-primary" type="button" name="item-4-button"
+                                id="item-1-button">Shop Now</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col p-4 mx-auto"><!--product start-->
+                    <hr class="text-white">
+                    <h2 class="none">Books</h2>
+                    <hr class="text-white">
+                    <div class="row ">
+                        {% for x in book %}
+                        <div class="col-md-3 mt-4"><!--product1 start-->
+                            <div class="card" style="width: 100%;">
+                                <a href="/login">
+                                    <img src="{{x.pimage.url}}" width="100%" height="350px" class="card-img-top"
+                                        alt="...">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{x.name}}</h5>
+                                    <p class="card-text">Rs.{{x.price}}</p>
+                                    {% if x.cat == 1 %}
+                                    <p class="card-text">Action</p>
+                                    {% elif x.cat == 2 %}
+                                    <p class="card-text">Anime</p>
+                                    {% else %}
+                                    <p class="card-text">Science-Fiction</p>
+                                    {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div><!--  product1 end -->
+                        {% endfor %}
+                    </div>
+                </div> <!--  product end -->
+                <hr class="text-white">
+            </div>
+        </div><!--product and filter end-->
+        {% endif %}
+</body>
+
+</html>
+
+{% endblock 'main' %}

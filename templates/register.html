@@ -1,0 +1,66 @@
+{% extends 'sign_in.html'%}
+
+{% block 'main' %}
+
+{% load static %}
+
+<style>
+    .text-white{
+        text-align: center;
+    }
+
+    .body{
+        background-color: #111;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body class="body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mt-4 p-4 mx-auto">
+                <h2 class="text-white">Registration</h2>
+                {% if errmsg %}
+                <div class="alert alert-danger">
+                    {{errmsg}}
+                </div>
+                {% endif %}
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="Input1" class="form-label text-white">Username:</label>
+                            <input type="email" class="form-control" id="Input1" name="uname" placeholder="Enter Username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Input2" class="form-label text-white">Password:</label>
+                            <input type="password" class="form-control" id="Input2" name="upass" placeholder="Enter Password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Input2" class="form-label text-white">Confirm Password:</label>
+                            <input type="password" class="form-control" id="Input2" name="ucpass" placeholder=" Re Enter Password">
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Register"> <a class="text-white" style="text-decoration: none;">Already a User</a> <a href="/login" style="text-decoration: none;">Login</a>
+                    {% if success %}
+    
+                    <div class="alert alert-danger">
+                    {{success}}
+                    </div>
+    
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'asset/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+
+{% endblock 'main' %}

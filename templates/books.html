@@ -1,0 +1,102 @@
+
+
+{% extends 'base.html' %}
+
+{% block 'main' %}
+{% load static %}
+
+<style>
+    .container{
+        background-color: black;
+    }
+
+    h5{
+        color: white;
+    }
+
+    .none{
+        text-align: center;
+        color: white;
+    }
+
+    .body{
+        background-color: #111;
+    }
+
+    .card-body{
+        background-color: #999;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body class="body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mt-2 p-4 mx-auto"><!--FILTER START-->
+                <hr class="text-white">
+                <h5 class="text-white">Filter by Category</h5>
+                <hr class="text-white">
+                <p><a class="anchor" href="/catfilter/1">By Action</a></p>
+                <p><a class="anchor" href="/catfilter/2">By Anime</a></p>
+                <p><a class="anchor" href="/catfilter/3">By Science-Fiction</a></p>
+                <hr class="text-white">
+                <h5 class="text-white">Filte by Price</h5>
+                <hr class="text-white">
+                <div class="mb-3">
+                    <form action="/range">
+                        <label for="Input1" class="form-label text-white">Min Value:</label>
+                        <input type="number" name="min" class="form-control" id="Input1" placeholder="Min value">
+                        <label for="Input2" class="form-label text-white mt-2">Max Value:</label>
+                        <input type="number" name="max" class="form-control" id="Input2" placeholder="Max value">
+    
+                        <div class="mb-3 mt-4">
+                            <input type="submit" value="Submit" class="btn btn-outline-dark text-white">
+                        </div>
+                    </form>
+                </div>
+                <hr class="text-white">
+                <h5 class="text-white">Filter by Price</h5>
+                <hr class="text-white">
+                <p><a class="anchor" href="/sort/0">Low to High</a></p>
+                <p><a class="anchor" href="/sort/1">High to Low</a></p>
+            </div> <!--  filter end -->
+    
+            <div class="col p-4 mx-auto"><!--product start-->
+                <hr class="text-white">
+                <h2 class="none">Books</h2>
+                <hr class="text-white">
+                <div class="row ">
+                    {% for x in book %}
+                    <div class="col-md-4 mt-4"><!--product1 start-->
+                        <div class="card" style="width: 100%;">
+                            <img src="{{x.pimage.url}}" width="100%" height="350px" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{x.name}}</h5>
+                                <p class="card-text">Rs.{{x.price}}</p>
+                                {% if x.cat == 1 %}
+                                <p class="card-text">Action</p>
+                                {% elif x.cat == 2 %}
+                                <p class="card-text">Anime</p>
+                                {% else %}
+                                <p class="card-text">Science-Fiction</p>
+                                {% endif %}
+                                <a href="/bdetails/{{x.id}}" class="btn btn-outline-primary">See Details</a>
+                            </div>
+                        </div>
+                    </div><!--  product1 end -->
+                    {% endfor %}
+                </div>
+            </div> <!--  product end -->
+            <hr class="text-white">
+        </div>
+    </div><!--product and filter end-->
+</body>
+</html>
+
+{% endblock 'main' %}

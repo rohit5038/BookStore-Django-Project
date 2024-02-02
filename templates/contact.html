@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block 'main' %}
+
+{% load static %}
+
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  input[type=text],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+
+  input[type=email],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+
+  input[type=tel],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+
+
+  input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  h5 {
+    color: white;
+  }
+
+
+  .body {
+    background-color: #111;
+  }
+</style>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body class="body text-white">
+
+  <h3>Contact Form</h3>
+
+  <div class="container">
+    {% if success %}
+    <div class="alert alert-danger">
+      {{success}}
+    </div>
+    {% endif %}
+
+    <form action="/contact" method="post">
+      {% csrf_token %}
+      <label for="fname">First Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter Your name.." required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter Your email.." required>
+
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter Your Mobile Number.." required>
+
+      <label for="desc" class="mt-3">How May We Help You?:</label>
+      <textarea id="desc" class="mt-1" name="desc" placeholder="Write something.." style="height:200px"
+        required></textarea>
+
+      <input type="submit" value="Submit" class='mt-3'>
+    </form>
+  </div>
+  <br>
+  <div class="container">
+    <h2>Visit Our Branch:</h2>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.021458343432!2d72.83783087497591!3d19.018776082174117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cedb50782445%3A0x53638ee4b859439a!2sKabutarkhana%20Cir%2C%20Near%20Kabutar%20khana%2C%20Priyadarshini%20Society%2C%20Dadar%2C%20Mumbai%2C%20Maharashtra%20400028!5e0!3m2!1sen!2sin!4v1705227350145!5m2!1sen!2sin"
+      width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <hr>
+</body>
+
+</html>
+
+{% endblock 'main' %}

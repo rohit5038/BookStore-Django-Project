@@ -1,0 +1,80 @@
+{% load static %}
+
+<style>
+
+.navbar{
+    display: flex;
+    position: fixed;
+}
+
+
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'asset/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <title>ecomm-website</title>
+</head>
+
+<body>
+    <!-- Header start -->
+                <nav class="navbar navbar-expand-lg shadow">
+                    <div class="container-fluid">
+                        <a class="navbar-brand text-white" href='/'>
+                            <img src="{% static 'asset/images/books/logo.jpg' %}" width="50" height="50">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/books">Books</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/viewcart">Cart</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/about">About Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/contact">Contact Us</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/logout">Logout</a>
+                                </li>
+
+                                {% else %}
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/register">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/login">Login</a>
+                                </li>
+                            </ul>
+                            {% endif %}
+                            <!--<form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>-->
+                        </div>
+                    </div>
+                </nav>
+    <!--Header end-->
+    <!-- No Use -->
+    <script src="{% static 'asset/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'asset/js/popper.min.js' %}"></script>
+</body>
+
+</html>
