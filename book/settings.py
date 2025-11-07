@@ -22,6 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yekgsb$be60f!2-nrwev0$6y(xg_qgw4e!%3%6ljok+u)3qyr!'
+RZP_KEY_ID = 'rzp_test_HWqYOvoX8Qvvu5'
+RZP_KEY_SECRET = 'HbXMukWjCJlfqfl1ZAaWIVB3'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,12 +80,12 @@ WSGI_APPLICATION = 'book.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'book1',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'book_store',
+        'USER':'postgres',
         'HOST':'localhost',
-        'USER':'root',
-        'PASSWORD':'',
-        'PORT':'3306',
+        'PASSWORD':'root',
+        'PORT':'5432',
     }
 }
 

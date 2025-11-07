@@ -41,7 +41,7 @@
                 {% for x in book %}
                 {% if forloop.counter == 1 %}
                 <p><strong>Name:</strong> {{x.uid.username}}</p>
-                <p><strong>Mobile:</strong> 7208501225</p>
+                <!-- <p><strong>Mobile:</strong> 7208501225</p> -->
                 <p><strong>Email:</strong>{{x.uid.email}}</p>
                 {% endif %}
                 {% endfor %}
@@ -51,7 +51,7 @@
                     <h5 class="bg-secondary text-white p-3">Book Details</h5>
                     {% for x in book %}
                     <div class="col-md-4">
-                        <img src="{{x.pid.pimage.url}}" width="50%">
+                        <img src="{{x.pid.pimage}}" width="50%">
                     </div>
                     <div class="col-md-6 mb-4">
                         <p><strong>Book Name:</strong>&nbsp;&nbsp;&nbsp;{{x.pid.name}}</p>

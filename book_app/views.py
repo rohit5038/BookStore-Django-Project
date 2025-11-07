@@ -1,12 +1,15 @@
 #Use of HttpResponse to print response in web page
 import random
-import razorpay
+import razorpay, time
 from django.shortcuts import render,HttpResponse,redirect
 from django.views import View # Class base view
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .models import book,cart,order,Contact
 from django.db.models import Q
+from decimal import Decimal, ROUND_HALF_UP
+from django.conf import settings
+
 
 # Create your views here.
 
@@ -108,14 +111,19 @@ def sort(request,sv):
     return render(request, 'books.html', context)
 
 def range(request):
-    min = request.GET['min']
-    max = request.GET['max']
-    q1=Q(price__gte=min)
-    q2=Q(price__lte=max)
-    q3=Q(is_active=True)
-    p=book.objects.filter(q1&q2&q3)
-    context={}
-    context['book']=p
+    min_price = request.GET.get('min')
+    max_price = request.GET.get('max')
+    
+    q = Q(is_active=True)
+    
+    if min_price:
+        q &= Q(price__gte=min_price)
+    
+    if max_price:
+        q &= Q(price__lte=max_price)
+        
+    p = book.objects.filter(q)
+    context = {'book': p}
     return render(request, 'books.html', context)
 
 def about(request):
@@ -208,72 +216,67 @@ def updateqty(request, qv, cid):
 
 def placeorder(request):
     userid = request.user.id
-    #print(userid)
-    c=cart.objects.filter(uid=userid)
-    #print(c)
-    oid = random.randrange(1000,9999)
-    #print(oid)
-    
+    c = cart.objects.filter(uid=userid)
+    oid = random.randrange(1000, 9999)
+
     for x in c:
-        print(x)
-        print(x.pid)
-        print(x.qty)
-        o = order.objects.create(orderid=oid, pid=x.pid, uid=x.uid, qty=x.qty)
-        o.save()#shit data into order
-        #delete data from order
-        
-    orders=order.objects.filter(uid=userid)
-    np=len(orders)
-    s=0
-    for x in c:
-        # print(x)
-        # print(x.pid.price)
-        s = s + (x.pid.price * x.qty)
-        print(s)
-        context = {}
-        context['book'] = c
-        context['totalprice'] = s
-        context['totalitem'] = np
+        order.objects.create(orderid=oid, pid=x.pid, uid=x.uid, qty=x.qty)
+
+    np = len(c)
+    s = sum(item.pid.price * item.qty for item in c)
+
+    context = {
+        'book': c,
+        'totalprice': s,
+        'totalitem': np,
+    }
     return render(request, 'placeorder.html', context)
-    #return HttpResponse("in place order")
+
 
 def makepayment(request):
-    orders = order.objects.filter(uid=request.user.id)
-    s = 0
-    for x in orders:
-        # print(x)
-        # print(x.pid.price)
-        s = s + (x.pid.price * x.qty)
-        oid=x.orderid
-    
-    client = razorpay.Client(auth=("rzp_test_HWqYOvoX8Qvvu5", "HbXMukWjCJlfqfl1ZAaWIVB3"))
-    
+    """
+    Compute total from cart items, convert to paise, create single Razorpay order,
+    and render pay.html with the razorpay order dict in context (orders).
+    """
+    # Use your cart model name — file used 'cart' in repo
+    cart_items = cart.objects.filter(uid=request.user.id)
+    if not cart_items.exists():
+        # nothing to pay for
+        return redirect('cart')   # change target if your cart url name different
+
+    # compute total safely using Decimal
+    total_inr = Decimal('0.00')
+    for item in cart_items:
+        # assume item.pid.price exists and is numeric
+        price = Decimal(item.pid.price)
+        qty = int(item.qty)
+        total_inr += (price * qty)
+
+    # convert to paise (Razorpay expects integer paise)
+    paise_amount = int((total_inr * Decimal('100')).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+
+    # create razorpay client using settings (don't hardcode keys)
+    client = razorpay.Client(auth=(getattr(settings, 'RZP_KEY_ID', ''), getattr(settings, 'RZP_KEY_SECRET', '')))
+
+    # unique receipt per attempt
+    receipt = f"rcpt_{request.user.id}_{int(time.time())}"
+
     DATA = {
-    "amount": s*10,
-    "currency": "INR",
-    "receipt": oid,
-    "notes": {
-        "key1": "value3",
-        "key2": "value2"
-        }
+        "amount": paise_amount,
+        "currency": "INR",
+        "receipt": receipt,
+        "notes": {"user": request.user.username}
     }
+
+    # Create razorpay order ONCE
     payment = client.order.create(data=DATA)
-    print(payment)
-    uname=request.user.username
-    print(uname)
-    context={}
-    context['orders']=payment
-    context['uname']=uname
-    client.order.create(data=DATA)
+
+    # Optionally: log payment or create a PaymentAttempt record here
+    # Example: PaymentAttempt.objects.create(user=request.user, rzp_order_id=payment['id'], amount=paise_amount, receipt=receipt, status='created')
+
+    context = {
+        'orders': payment,      # call it orders to match existing template usage
+        'uname': request.user.username,
+        'total_inr': total_inr
+    }
     return render(request, 'pay.html', context)
-    #return HttpResponse("in payment section")
-
-
-
-
-
-#   sql        ORM
-#   >           gt
-#   <           lt
-#   >=          gte
-#   <=          lte

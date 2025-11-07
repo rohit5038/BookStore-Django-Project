@@ -8,7 +8,7 @@ class book(models.Model):
     bdetails=models.CharField(max_length=1000, verbose_name = "Book Details")
     cat=models.IntegerField(verbose_name = "Category", choices = CAT)
     is_active=models.BooleanField(default=True, verbose_name = "Available")
-    pimage=models.ImageField(upload_to='image')
+    pimage = models.TextField(verbose_name="Image URL")
     
 class cart(models.Model):
     uid=models.ForeignKey(User,on_delete=models.CASCADE,db_column="uid")
