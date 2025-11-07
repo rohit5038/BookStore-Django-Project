@@ -1,0 +1,90 @@
+# These are some examples of commonly ignored file patterns.
+# You should customize this list as applicable to your project.
+# Learn more about .gitignore:
+#     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+
+# Node artifact files
+node_modules/
+dist/
+
+# Compiled Java class files
+*.class
+
+# Compiled Python bytecode and cache folders
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migration files (ignore all except __init__.py)
+**/migrations/*
+!**/migrations/__init__.py
+
+# Logs and database files
+*.log
+*.pot
+*.sqlite3
+db.sqlite3
+
+# Package / build files
+*.jar
+*.zip
+*.tar.gz
+*.egg-info/
+build/
+dist/
+
+# JetBrains IDE (PyCharm, IntelliJ)
+.idea/
+
+# VS Code
+.vscode/
+
+# Unit test reports
+TEST*.xml
+.coverage
+htmlcov/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Applications / binaries
+*.app
+*.exe
+*.war
+
+# Large media files (optional)
+*.mp4
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+
+# Virtual environments
+venv/
+.virtualenv/
+env/
+
+# Python virtual environment metadata
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment / secret files
+.env
+*.env
+.env.*
+secrets.json
+
+# Temporary and cache files
+tmp/
+temp/
+*.tmp
+.cache/
+.tox/
+pytest_cache/
+
+# Backup / editor files
+*~
+*.swp
+*.bak
