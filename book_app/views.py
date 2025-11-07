@@ -58,7 +58,7 @@ def register(request):
             
             except Exception:
                 context={}
-                context['errmsg']="Username already Exists"
+                context['errmsg']="Email already Exists"
                 return render(request,'register.html',context)
     else:
         return render(request,'register.html')

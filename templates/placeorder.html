@@ -40,8 +40,6 @@
                 <h5 class="bg-secondary text-white p-3">Customer Details</h5>
                 {% for x in book %}
                 {% if forloop.counter == 1 %}
-                <p><strong>Name:</strong> {{x.uid.username}}</p>
-                <p><strong>Mobile:</strong> 7418520963</p>
                 <p><strong>Email:</strong>{{x.uid.email}}</p>
                 {% endif %}
                 {% endfor %}
